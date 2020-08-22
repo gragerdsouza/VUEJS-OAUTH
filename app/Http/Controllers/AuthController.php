@@ -107,6 +107,48 @@ class AuthController extends Controller
 
         $accessToken->delete();
         //$accessToken->revoke();
-        return response()->json('Logged Out Successfully', 200);
+        return response()->json([
+            'message' => 'Logged Out Successfully',
+            'status' => true
+        ], 422);
+    }
+
+    public function refresh(Request $request)
+    {
+        $response_data = array();
+        $validator = Validator::make($request->all(), [
+            'refresh_token' => 'required',
+        ]);
+
+        if ($validator->fails()) {
+            $response_data['message'] = $validator->messages();
+            $response_data['status'] = false;
+            return response()->json($response_data);
+        }
+
+        $data = [
+            'grant_type' => 'refresh_token',
+            'client_id' => config()->get('services.oauth.client_id'),
+            'client_secret' => config()->get('services.oauth.client_secret'),
+            'refresh_token' => request('refresh_token'),
+        ];
+        $request = Request::create('/oauth/token', 'POST', $data);
+        $response = app()->handle($request);
+
+        // Check if the request was successful
+        
+        // Get the data from the response
+        $response_data = json_decode($response->getContent());
+        //print_r( $response_data->token_type);
+        return $response->setStatusCode(200);
+
+        return response()->json([
+            'message' => 'Successfully Loged In',
+            'status' => true,
+            'token_type' => $response_data->token_type,
+            'expires_in' => $response_data->expires_in,
+            'access_token' => $response_data->access_token,
+            'refresh_token' => $response_data->refresh_token
+        ], 200);
     }
 }
