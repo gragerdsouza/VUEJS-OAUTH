@@ -23,8 +23,10 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
 	]) ->header('Content-Type', 'application/json');
 });
 
-//Route::post('register', 'Auth\RegisterController@register');
+Route::post('register', 'AuthController@register');
 Route::post('login', 'AuthController@login');
+Route::middleware('auth:api')->post('/logout', 'AuthController@logout');
+
 //Route::post('refresh', 'Auth\LoginController@refresh');
 //Route::post('login', 'LoginController@login');
 /*Route::group(['middleware' => 'auth:api'], function() {
