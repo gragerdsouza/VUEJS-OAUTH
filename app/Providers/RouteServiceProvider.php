@@ -72,6 +72,7 @@ class RouteServiceProvider extends ServiceProvider
      */
     protected function mapApiRoutes()
     {
+        //Route::domain('api.itech4u.co.in')
         Route::prefix('api')
             ->middleware('api')
             ->namespace($this->namespace)
