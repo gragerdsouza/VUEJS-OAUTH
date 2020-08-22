@@ -24,8 +24,8 @@ class AuthController extends Controller
 
         $data = [
             'grant_type' => 'password',
-            'client_id' => config()->get('services.passport.client_id'),
-            'client_secret' => config()->get('services.passport.client_secret'),
+            'client_id' => config()->get('services.oauth.client_id'),
+            'client_secret' => config()->get('services.oauth.client_secret'),
             'username' => request('username'),
             'password' => request('password'),
         ];
