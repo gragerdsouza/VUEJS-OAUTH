@@ -24,6 +24,7 @@
         "vue-template-compiler": "^2.6.10"
     },
     "dependencies": {
-        "npm-watch": "^0.7.0"
+        "npm-watch": "^0.7.0",
+        "router-module": "0.0.1"
     }
 }
